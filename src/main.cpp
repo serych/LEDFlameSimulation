@@ -1,12 +1,25 @@
 /* Simple but better PWM candle flame simulation for cheap Chinese LED candles*/
 #include <Arduino.h>
 // define pins based on the used candle flame light so, that L1 is the bottom one and L6 the top one
+
+/*  
+// smaller 12V LED light
 #define L1 PIN_PA3
 #define L2 PIN_PA0
 #define L3 PIN_PA2
 #define L4 PIN_PA1
 #define L5 PIN_PA7
 #define L6 PIN_PA6
+*/
+
+// Bigger USB stick LED light
+#define L1 PIN_PA1
+#define L2 PIN_PA7
+#define L3 PIN_PA6
+#define L4 PIN_PA2
+#define L5 PIN_PA0
+#define L6 PIN_PA3
+
 // We will use 64 steps PWM e.i. 6 EV flame dynamics
 // PWM frequency is about 550 Hz
 #define CYCLES 64
