@@ -27,10 +27,18 @@ The human eye perceives light intensity logarithmically. This means that light s
 The code controls six LEDs labeled L1 to L6. It is assumed that L1 is located at the lowest (at the wick of the imaginary candle) while L6 is at the top of the highest flame. 
 The Attiny 412 has pins PA0, PA1, PA2, PA3, PA6 and PA7.
 The first thing you need to do for a particular Chinese candle is to find out which pin controls the LED at which flame position. Then in the definitions at the beginning of the code, assign L1 to L6 so that L1 would be controling lowest and L6 is highest LED.
+
+![Attiny 412 pinout](https://github.com/user-attachments/assets/0fa73b6f-d530-423a-9e38-d5c77108f839)
 ### Current Load Capacity
 All the Chinese candles I have tried are wired so that the anodes of the LEDs are directly connected to +5 V, while the cathodes are connected via a serial resistor to the controller pins. This means that the pins work in sink mode. The LED is lit when the value LOW (logic 0) is written to the pin.
-Attiny has written in the datasheet that the total sum of continuous currents of the pins should not exceed 100mA (both in source and sink mode). 
+There is written in the datasheet of Attiny that the total sum of continuous currents of the pins should not exceed 100mA (both in source and sink mode). 
 Even though the instantaneous current is probably larger at some points, the Attiny has no problem lighting a candle containing even 6 fairly bright LEDs on each pin with a series resistance of only 39 ohms.
+### Program description
+The counter is incremented in the main loop of the program and its value modulo "CYCLES" forms the counter register for the PWM. Once every random time, new random values of the brightness of each LED are calculated. We want the bottom of the flame to change brightness only slightly and to be lit almost permanently. Conversely, the top flame should only occasionally lick the top LEDs. Therefore, different minima and maxima are used when generating the random values for each LED.
+The flame licking is handled in such a way that the top LEDs depend on the state of the bottom LEDs (the more the lower LED is lit at any given moment, the more likely the flame will lick the higher LEDs). 
+It is good to play with the values in these sections of the program and " tailor" the flame to your liking.  
+To make the flame movement smoother, the newly generated values are always averaged with the previous ones. 
+After the new values are generated, the program's main loop counter is reset new random time for new recalculation is generated and the process repeats endlessly. 
 
 
 
